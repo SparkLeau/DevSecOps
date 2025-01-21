@@ -1,0 +1,4 @@
+fileignoreconfig:
+- filename: config.json
+  checksum: 8d496e56dd364b8d63885c74e68aebeb90d0d1800f5ef0585931a3c156c48715
+  ignore_detectors: []
