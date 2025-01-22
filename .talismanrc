@@ -6,5 +6,5 @@ fileignoreconfig:
   checksum: cb9780e9a2492e89465a0bdd206be8ddb4069d0ba92997783259386286bad5cd
   version: ""
 - filename: config.json
-  checksum: e7f43e85207b9716ff306bff759a85133bc2504d467bcaa28ea7c9dca8dc6901
+  checksum: fa64fccd3932a9df8f6c91ef55caeb5690999edec7b4640e1b87aba109887d8f
   version: ""
