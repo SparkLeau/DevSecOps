@@ -8,5 +8,7 @@
     <properties>
         <sonar.projectKey>sample_project</sonar.projectKey>
         <sonar.host.url>http://172.21.48.1:32768</sonar.host.url>
+        <sonar.sources>.</sonar.sources>
+        <sonar.inclusions>**/*</sonar.inclusions>
     </properties>
 </project>
