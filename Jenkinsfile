@@ -1,24 +1,38 @@
-pipeline {
-  agent any
-  tools {
-      maven 'Maven'
-  }
+// pipeline {
+//   agent any
+//   tools {
+//       maven 'Maven'
+//   }
+//   stages {
+//     stage("build") {
+//       steps {
+//         sh 'mvn -v'
+//       }
+//     }
+
+//     stage("test") {
+//       steps {
+//         echo 'Running tests'
+//       }
+//     }
+
+//     stage("deploy") {
+//       steps {
+//         echo 'Deploying application'
+//       }
+//     }
+//   }
+// }
+
+pipeline	{
+  agent none
   stages {
-    stage("build") {
+    stage("Build & Analyse avec SonarQube") {
+      agent any
       steps {
-        sh 'mvn -v'
-      }
-    }
-
-    stage("test") {
-      steps {
-        echo 'Running tests'
-      }
-    }
-
-    stage("deploy") {
-      steps {
-        echo 'Deploying application'
+        script {
+          sh 'mvn clean package sonar:sonar'
+        }
       }
     }
   }
