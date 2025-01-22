@@ -9,7 +9,7 @@
         <sonar.projectKey>sample_project</sonar.projectKey>
         <sonar.host.url>http://172.21.48.1:32768</sonar.host.url>
         <sonar.sources>config.json</sonar.sources> <!-- Fichiers que vous souhaitez analyser -->
-        <sonar.language>json</sonar.language>
+        <sonar.inclusions>config.json</sonar.inclusions>
     </properties>
 
     <build>
