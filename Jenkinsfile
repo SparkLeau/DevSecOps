@@ -1,37 +1,38 @@
 pipeline {
-    agent any
+    agent none
     tools {
         maven 'Maven'
     }
-
     stages {
-        stage('Checkout Code') {
+	   stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/SparkLeau/DevSecOps.git' 
+                git branch: 'master', url: 'https://github.com/nekarir/Jeu.git' 
             }
-        }
-        
-        stage('Clean') {
-            steps {
-                sh 'mvn clean'
-            }
-        }
 
-        stage('Build') {
+        stage('Test SonarQube Connection') {
             steps {
-                sh 'mvn compile'
+                script {
+                    sh 'ping -c 4 sonarqube'  
+                    sh 'curl -v http://192.168.10.50:32768/'
+                }
             }
         }
-
-        stage('Test') {
+        stage('SCM') {
             steps {
-                sh 'mvn test'
+                checkout scm
             }
         }
-
-        stage('SonarQube Analysis') {
+        stage("Build & Analyse avec SonarQube") {
+            agent any
+            steps {
+                script {
+                    sh 'mvn clean package sonar:sonar'
+                }
+            }
+        }
+	   stage('SonarQube Analysis') {
             environment {
-                SONAR_HOST_URL = 'http://172.21.48.1:32768/' 
+                SONAR_HOST_URL = 'http://192.168.10.50:32768/' 
                 SONAR_AUTH_TOKEN = credentials('SonarQube') 
             }
             steps {
@@ -39,5 +40,18 @@ pipeline {
             }
         }
 
+
+        stage("deploy & OWASP Dependency-Check") {
+            agent any
+            steps {
+                dependencyCheck additionalArguments: '''
+                -o './'
+                -s './'
+                -f 'ALL'
+                --prettyPrint
+                --purge''', odcInstallation: 'owasp-dependency'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
     }
 }
